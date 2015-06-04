@@ -1,5 +1,9 @@
-## for tidying up rowRanges prior to merging
-##
+#' for tidying up rowRanges prior to merging
+#'
+#' @param x  a GRanges or GRangesList that has metadata columns it doesn't need 
+#'
+#' @describeIn  ozymandias-utils
+#'
 stripMcols <- function(x) { # {{{
   if (is(x, "GRangesList")) {
     xx <- unlist(x)
@@ -12,8 +16,13 @@ stripMcols <- function(x) { # {{{
   return(x)
 } # }}}
 
-## mask beta values by pval for a GenomicRatioSet 
-## 
+#' mask (set to NA) beta values by pval for a GenomicRatioSet 
+#' 
+#' @param grSet   a GenomicRatioSet with matrices "Beta" and "pval"
+#' @param pcutoff optional p-value cutoff for masking, default is 0.01
+#' 
+#' @describeIn  ozymandias-utils
+#'
 maskBetas <- function(grSet, pcutoff=0.01, ...) { # {{{
 
   if (!"pval" %in% names(assays(grSet))) {
@@ -27,3 +36,57 @@ maskBetas <- function(grSet, pcutoff=0.01, ...) { # {{{
   return(grSet)
 
 } # }}}
+
+#' convenience function to feed getSurv, OSurv, EFSurv
+#'
+#' @param x         a SummarizedExperiment-like dataset
+#' @param time      column name for time to event covariate, default "time"
+#' @param event     column name for censoring/event covariate, default "event"
+#'
+#' @return          a boolean vector: whether each column has both covariates
+#'
+#' @describeIn  ozymandias-utils
+#'
+hasSurv <- function(x, time="time", event="event") {
+  return(!is.na(x[[timeCol]]) & !is.na(x[[eventCol]]))
+}
+
+#' convenience function to feed OSurv, EFSurv
+#'
+#' @param x         a SummarizedExperiment-like dataset
+#' @param time      column name for time to event, default "OS"
+#' @param event     column name for censoring/event (0/1), default "OSevent"
+#'
+#' @return          a \code{Surv} object, if one can be constructed from x 
+#'
+#' @describeIn  ozymandias-utils
+#'
+getSurv <- function(x, time="time", event="event") { 
+  xx <- colData(x)[hasSurv(x, time, event),]
+  Surv(xx[[time]], xx[[event]])
+}
+
+#' Get overall survival for a SummarizedExperiment-like dataset
+#' 
+#' @param x         a SummarizedExperiment-like dataset
+#' @param time      column name for time to event, default "OS"
+#' @param event     column name for censoring/event (0/1), default "OSevent"
+#' 
+#' @return          a \code{Surv} object, if one can be constructed from x 
+#'
+#' @describeIn  ozymandias-utils
+#'
+OSurv <- function(x, time="OS", event="OSevent") getSurv(x, time, event)
+
+
+#' Get event-free survival from SummarizedExperiment-like data
+#' 
+#' @param x         a SummarizedExperiment-like dataset
+#' @param time      column name for time to event, default "EFS"
+#' @param event     column name for censoring/event (0/1), default "EFSevent"
+#' 
+#' @return          a \code{Surv} object, if one can be constructed from x 
+#'
+#' @describeIn  ozymandias-utils
+#'
+EFSurv <- function(x, time="EFS", event="EFSevent") getSurv(x, time, event)

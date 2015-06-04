@@ -1,3 +1,11 @@
+#' plot SNP probes from DNA methylation arrays to avoid label swaps
+#' 
+#' @param x           SummarizedExperiment-like object with DNA methylation data
+#' @param individuals How many distinct individuals are (allegedly) in the data?
+#' @param rotate      rotate the plot? (default is FALSE) 
+#' 
+#' @return            subject identity assignments for the dataset 
+#'
 plotSNPs <- function(x, individuals=NULL, rotate=FALSE, ...) {
 
   name <- as.character(match.call()["x"])

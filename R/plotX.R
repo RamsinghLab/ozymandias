@@ -1,4 +1,12 @@
-plotX <- function(x, nFeats=100, pval=.000001, rotate=FALSE, ...) {
+#' plot X chromosome probes from DNA methylation arrays to confirm gender
+#' 
+#' @param x       a SummarizedExperiment-like dataset with DNA methylation data
+#' @param nFeats  how many features (max) to use for clustering (default 100)
+#' @param rotate  rotate the plot? (default is FALSE) 
+#' 
+#' @return        gender assignments for the subjects 
+#'
+plotX <- function(x, nFeats=100, rotate=FALSE, ...) {
 
   if(!(is(x, "SummarizedExperiment") | is(x, "RangedSummarizedExperiment"))) {
     stop("You need to provide a SummarizedExperiment for this to work")
