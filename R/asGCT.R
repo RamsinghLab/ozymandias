@@ -48,16 +48,16 @@ asGCT <- function(x, toTDF=F, assay=1, group=NULL, stub=NULL, genome="hg19") {
   return(fname)
 } # }}}
 
-.dumpBED4 <- function(gr, probefile) { # {{{
-  coords <- as.data.frame(gr)[,1:3]
-  coords <- cbind(coords, rownames(coords))
-  write.table(coords, row.names=F, col.names=F, file=probefile, sep="\t")
+.toBED4 <- function(gr, filename) { # {{{
+  coord <- as.data.frame(gr)[,1:3]
+  coord <- cbind(coord, rownames(coord))
+  write.table(coord, row.names=F, col.names=F, quote=F, file=filename, sep="\t")
 } # }}}
 
 .toTDF <- function(filename, probeGR) { # {{{
   fileout <- sub("gct", "tdf", filename)
   probefile <- paste0(sub(".gct", "", filename), ".probes.bed")
-  .dumpBED4(probeGR, probefile)
+  .toBED4(probeGR, probefile)
   command <- paste("igvtools", "totdf", 
                    "-p", probefile, 
                    filename,
