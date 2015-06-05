@@ -17,7 +17,7 @@ asGCT <- function(x, toTDF=F, assay=1, group=NULL, stub=NULL, genome="hg19") {
   if (is.null(group)) { 
     ## dump everyone at the same time 
     filename <- .dumpGCT(assays(x)[[assay]], stub, genome)
-    if (toTDF) .toTDF(filename, SummarizedExperiment::rowRanges(x))
+    if (toTDF) filename <- .toTDF(filename, SummarizedExperiment::rowRanges(x))
     filenames <- list(stub=filename)
   } else { 
     ## dump by group
@@ -26,7 +26,9 @@ asGCT <- function(x, toTDF=F, assay=1, group=NULL, stub=NULL, genome="hg19") {
       grp <- which(group == g)
       grpstub <- paste(stub, g, sep=".")
       filename <- .dumpGCT(assays(x[, grp])[[assay]], grpstub, genome)
-      if (toTDF) .toTDF(filename, probeGR=SummarizedExperiment::rowRanges(x))
+      if (toTDF) {
+        filename <- .toTDF(filename, probeGR=SummarizedExperiment::rowRanges(x))
+      }
       filenames <- append(filenames, filename)
     }
   }
@@ -66,5 +68,12 @@ asGCT <- function(x, toTDF=F, assay=1, group=NULL, stub=NULL, genome="hg19") {
                    "hg19")
   message("Converting to TDF via:")
   message(command)
-  system(command)
+  retval <- system(command)
+  if (file.exists(fileout)) {
+    unlink(probefile)
+    unlink(filename)
+    return(fileout)
+  } else {
+    return(filename)
+  }
 } # }}}
