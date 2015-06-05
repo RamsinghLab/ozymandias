@@ -43,7 +43,7 @@ asGCT <- function(x, toTDF=F, assay=1, group=NULL, stub=NULL, genome="hg19") {
   cat("#1.2", "\n", file=fname)
   cat(nrow(mat), "\t", ncol(mat), "\n", file=fname, append=TRUE) 
   cat(colnames(mat), file=fname, sep="\t", append=TRUE) 
-  write.table(mat, 
+  write.table(contents,
               file=fname, append=T, row.names=F, col.names=F, quote=F, sep="\t")
   return(fname)
 } # }}}
