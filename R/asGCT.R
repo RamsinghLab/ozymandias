@@ -36,7 +36,7 @@ asGCT <- function(x, toTDF=F, assay=1, group=NULL, stub=NULL, genome="hg19") {
 .dumpGCT <- function(mat, stub, genome="hg19") { # {{{
   fname <- paste(stub, genome, "gct", sep=".")
   contents <- data.frame(NAME=rownames(mat), Description=rownames(mat), mat)
-
+  message("Dumping values to ", fname, "...")
   ## formatting for GCT 
   cat("#1.2", "\n", file=fname)
   cat(nrow(mat), "\t", ncol(mat), "\n", file=fname, append=TRUE) 
@@ -55,5 +55,7 @@ asGCT <- function(x, toTDF=F, assay=1, group=NULL, stub=NULL, genome="hg19") {
                    filename,
                    fileout,
                    "hg19")
+  message("Converting to TDF via:")
+  message(command)
   system(command)
 } # }}}
