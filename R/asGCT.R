@@ -10,6 +10,7 @@
 #'
 asGCT <- function(x, toTDF=F, assay=1, group=NULL, stub=NULL, genome="hg19") { 
 
+  x <- sort(x) ## must be sorted by position for GCT and toTDF 
   if (is.null(stub)) stub <- as.character(match.call()["x"])
   if (is.null(assay)) assay <- 1 
 
