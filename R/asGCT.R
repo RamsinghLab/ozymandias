@@ -55,7 +55,5 @@ asGCT <- function(x, toTDF=F, assay=1, group=NULL, stub=NULL, genome="hg19") {
                    filename,
                    fileout,
                    "hg19")
-  retval <- system(command)
-  unlink(probefile)
-  return(retval)
+  system(command)
 } # }}}
