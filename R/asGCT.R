@@ -16,22 +16,21 @@ asGCT <- function(x, toTDF=F, assay=1, group=NULL, stub=NULL, genome="hg19") {
 
   if (is.null(group)) { 
     ## dump everyone at the same time 
-    filenames <- .dumpGCT(assays(x)[[assay]], stub, genome)
+    filename <- .dumpGCT(assays(x)[[assay]], stub, genome)
+    if (toTDF) .toTDF(filename, SummarizedExperiment::rowRanges(x))
+    filenames <- list(stub=filename)
   } else { 
     ## dump by group
     filenames <- list()
     for (g in levels(as.factor(group))) {
       grp <- which(group == g)
       grpstub <- paste(stub, g, sep=".")
-      filenames <- append(filenames, 
-                          .dumpGCT(assays(x[, grp])[[assay]], grpstub, genome))
+      filename <- .dumpGCT(assays(x[, grp])[[assay]], grpstub, genome)
+      if (toTDF) .toTDF(filename, probeGR=SummarizedExperiment::rowRanges(x))
+      filenames <- append(filenames, filename)
     }
   }
 
-  if (toTDF == TRUE) {
-    retvals <- lapply(filenames, .toTDF, 
-                      probeGR=SummarizedExperiment::rowRanges(x))
-  }
   invisible(filenames)
 
 }
