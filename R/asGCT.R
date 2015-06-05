@@ -50,7 +50,7 @@ asGCT <- function(x, toTDF=F, assay=1, group=NULL, stub=NULL, genome="hg19") {
 
 .toBED4 <- function(gr, filename) { # {{{
   coord <- as.data.frame(gr)[,1:3]
-  coord[,3] <- coord[,3] + 1 ## derrrrp
+  coord[,2] <- coord[,2] - 1 ## derrrrp
   coord <- cbind(coord, rownames(coord))
   write.table(coord, row.names=F, col.names=F, quote=F, file=filename, sep="\t")
 } # }}}
