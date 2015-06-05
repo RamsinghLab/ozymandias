@@ -58,7 +58,6 @@ asGCT <- function(x, toTDF=F, assay=1, group=NULL, stub=NULL, genome="hg19") {
   fileout <- sub("gct", "tdf", filename)
   probefile <- paste0(sub(".gct", "", filename), ".probes.bed")
   .dumpBED4(probeGR, probefile)
-  export(probeGR, probefile)
   command <- paste("igvtools", "totdf", 
                    "-p", probefile, 
                    filename,
