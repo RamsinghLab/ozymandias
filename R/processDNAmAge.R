@@ -3,8 +3,6 @@
 ## 
 processDNAmAge <- function(grSet, name, Tissue=NULL, ...) {
  
-  cols <- c("Sample_Name", "Age", "Female", "Tissue")
-
   if ("predictedSex" %in% names(colData(grSet)) &&  # {{{
       !"Female" %in% names(colData(grSet))) {
     grSet$Female <- as.numeric(grepl("^F", ignore=TRUE, grSet$predictedSex))
@@ -26,6 +24,9 @@ processDNAmAge <- function(grSet, name, Tissue=NULL, ...) {
     invisible(grSet) ## return a tidied version of the original
     message("Returning a (partially-reannotated) GenomicRatioSet.")
   } # }}}
+
+  ## mandatory columns in order to estimate DNAmAge 
+  cols <- c("Sample_Name", "Age", "Female", "Tissue")
 
   if (all(cols %in% names(colData(grSet))) && all(loci %in% rownames(grSet))) {
     annotFilename <- paste0(name, "_DNAmAge_Annotations.csv")
