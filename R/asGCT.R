@@ -28,7 +28,10 @@ asGCT <- function(x, toTDF=F, assay=1, group=NULL, stub=NULL, genome="hg19") {
     }
   }
 
-  if (toTDF == TRUE) retvals <- lapply(filenames, .toTDF, probeGR=rowRanges(x))
+  if (toTDF == TRUE) {
+    retvals <- lapply(filenames, .toTDF, 
+                      probeGR=SummarizedExperiment::rowRanges(x))
+  }
   invisible(filenames)
 
 }
@@ -46,9 +49,16 @@ asGCT <- function(x, toTDF=F, assay=1, group=NULL, stub=NULL, genome="hg19") {
   return(fname)
 } # }}}
 
+.dumpBED4 <- function(gr, probefile) { # {{{
+  coords <- as.data.frame(gr)[,1:3]
+  coords <- cbind(coords, rownames(coords))
+  write.table(coords, row.names=F, col.names=F, file=probefile, sep="\t")
+} # }}}
+
 .toTDF <- function(filename, probeGR) { # {{{
   fileout <- sub("gct", "tdf", filename)
   probefile <- paste0(sub(".gct", "", filename), ".probes.bed")
+  .dumpBED4(probeGR, probefile)
   export(probeGR, probefile)
   command <- paste("igvtools", "totdf", 
                    "-p", probefile, 
