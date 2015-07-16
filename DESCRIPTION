@@ -8,7 +8,7 @@ Authors@R: c(person("Tim", "Triche, Jr.", role = c("aut","cre"),
                     email = "tim.triche@gmail.com"),
              person("Steve", "Horvath", role = c("aut", "ctb")))
 Description: A pipeline to process and match Illumina DNA methylation data, SNP barcodes, expression and/or SV/CNV/SNV data for subjects who may have "holes"
-Depends: DMRcate, CopyNumber450k, ConsensusClusterPlus, RPMM, CAFE, massiR
+Depends: DMRcate, CopyNumber450k, ConsensusClusterPlus, RPMM, mclust
 Imports: methods, limma, minfi, Matrix, matrixStats, rtracklayer, GenomicRanges
 Suggests: knitr, FlowSorted.Blood.450k, motifbreakR, FEM, DART, PWMEnrich, coMET
 License: AGPL
