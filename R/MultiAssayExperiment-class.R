@@ -26,9 +26,9 @@ setValidity("MultiAssayExperiment",
                                 paste("Invalid perSampleMetadata elements:",
                                       paste(offenders, collapse=", ")))
                 msg <- validMsg(msg, 
-                                paste("Colnames(object@perSampleMetaData) must",
-                                      "match colnames(object) for every item",
-                                      "present in object@perSampleMetaData."))
+                                paste("colnames(x@perSampleMetadata)$item must",
+                                      "match colnames(x) for each & every item",
+                                      "present in x@perSampleMetadata."))
               }
               if (is.null(msg)) TRUE else msg
             })
