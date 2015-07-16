@@ -7,21 +7,28 @@
 setClass("MultiAssayExperiment", 
          representation(perSampleMetadata="List"), # or a DataFrameList maybe?
          contains="RangedSummarizedExperiment") # RangedSummarizedExperiments?
+
 setMethod("show", "MultiAssayExperiment", 
           function(object) {
             callNextMethod()
+            ## FIXME: pretty-print the way SummarizedExperiment does
             cat("perSampleMetadata:", names(object@perSampleMetadata), "\n")
           })
+
 setValidity("MultiAssayExperiment", 
             function(object) {
               msg <- validMsg(NULL, NULL)
               perSampleOk <- lapply(lapply(object@perSampleMetadata, colnames),
                                     identical, y=colnames(object))
               if (any(!perSampleOk)) {
-                offenders <- names(perSample)[!perSample]
+                offenders <- names(perSampleOk)[!perSampleOk]
                 msg <- validMsg(msg,
                                 paste("Invalid perSampleMetadata elements:",
                                       paste(offenders, collapse=", ")))
+                msg <- validMsg(msg, 
+                                paste("Colnames(object@perSampleMetaData) must",
+                                      "match colnames(object) for every item",
+                                      "present in object@perSampleMetaData."))
               }
               if (is.null(msg)) TRUE else msg
             })
