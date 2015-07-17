@@ -54,7 +54,7 @@ plotSNPs <- function(x, individuals=NULL, rotate=FALSE, ...) {
                                 distance="manhattan", clusterAlg="pam", 
                                 ...)[[individuals]]
     individual <- as.factor(rcc$consensusClass)
-    individuals <- levels(individual)
+    individuals <- length(levels(individual))
     heading <- paste("SNPs for", ncol(x) , "samples from", 
                      individuals, "subjects in", name)
   }
