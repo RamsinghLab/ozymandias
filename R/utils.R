@@ -4,6 +4,7 @@
 #'
 #' @describeIn  ozymandias-utils
 #'
+#' @export
 stripMcols <- function(x) { # {{{
   if (is(x, "GRangesList")) {
     xx <- unlist(x)
@@ -23,6 +24,7 @@ stripMcols <- function(x) { # {{{
 #' 
 #' @describeIn  ozymandias-utils
 #'
+#' @export
 maskBetas <- function(grSet, pcutoff=0.01, ...) { # {{{
 
   if (!"pval" %in% names(assays(grSet))) {
@@ -47,6 +49,7 @@ maskBetas <- function(grSet, pcutoff=0.01, ...) { # {{{
 #'
 #' @describeIn  ozymandias-utils
 #'
+#' @export
 hasSurv <- function(x, timeCol="time", eventCol="event") {
   return(!is.na(x[[timeCol]]) & !is.na(x[[eventCol]]))
 }
@@ -61,6 +64,7 @@ hasSurv <- function(x, timeCol="time", eventCol="event") {
 #'
 #' @describeIn  ozymandias-utils
 #'
+#' @export
 getSurv <- function(x, timeCol="time", eventCol="event") { 
   xx <- colData(x)[hasSurv(x, timeCol=timeCol, eventCol=eventCol),]
   Surv(xx[[timeCol]], xx[[eventCol]])
@@ -76,6 +80,7 @@ getSurv <- function(x, timeCol="time", eventCol="event") {
 #'
 #' @describeIn  ozymandias-utils
 #'
+#' @export
 OSurv <- function(x, timeCol="OS", eventCol="OSevent") {
   getSurv(x, timeCol, eventCol)
 }
@@ -90,6 +95,7 @@ OSurv <- function(x, timeCol="OS", eventCol="OSevent") {
 #'
 #' @describeIn  ozymandias-utils
 #'
+#' @export
 EFSurv <- function(x, timeCol="EFS", eventCol="EFSevent") {
   getSurv(x, timeCol, eventCol)
 }
