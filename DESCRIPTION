@@ -1,16 +1,16 @@
 Package: ozymandias
 Title: Tools for region- and process-centric analyses of multiple assay types
-Version: 0.8
-Date: 2015-07-15
+Version: 0.13
+Date: 2015-07-16
 Author: Tim Triche, Jr.
 Maintainer: Tim Triche, Jr. <tim.triche@gmail.com>
 Authors@R: c(person("Tim", "Triche, Jr.", role = c("aut","cre"),
                     email = "tim.triche@gmail.com"),
              person("Steve", "Horvath", role = c("aut", "ctb")))
 Description: A pipeline to process and match Illumina DNA methylation data, SNP barcodes, expression and/or SV/CNV/SNV data for subjects who may have "holes"
-Depends: DMRcate, CopyNumber450k, ConsensusClusterPlus, RPMM, CAFE, massiR
+Depends: CopyNumber450k, ConsensusClusterPlus, RPMM, mclust, survival
 Imports: methods, limma, minfi, Matrix, matrixStats, rtracklayer, GenomicRanges
-Suggests: knitr, FlowSorted.Blood.450k, motifbreakR, FEM, DART, PWMEnrich, coMET
+Suggests: knitr, pathview, FEM, PWMEnrich, DMRcate
 License: AGPL
 VignetteBuilder: knitr
 biocViews: GenomeAnnotation, DNAMethylation, FeatureExtraction

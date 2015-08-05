@@ -1,19 +1,17 @@
-#' Something like a SummarizedExperiment, but with "holes" and metadata checks
-#'
+#' Something like a SummarizedExperiment, but with referential integrity checks.
+#' This is mostly a proof of concept for a well-behaved integration container.
+#' 
 #' @slot perSampleMetadata associated per-sample data, checked against colnames
+#' 
+#' @import    SummarizedExperiment
+#' 
+#' @details   perSampleMetadata will shortly be renamed to "linkedAssays".
 #'
 #' @export
 #'
 setClass("MultiAssayExperiment", 
-         representation(perSampleMetadata="List"), # or a DataFrameList maybe?
-         contains="RangedSummarizedExperiment") # RangedSummarizedExperiments?
-
-setMethod("show", "MultiAssayExperiment", 
-          function(object) {
-            callNextMethod()
-            ## FIXME: pretty-print the way SummarizedExperiment does
-            cat("perSampleMetadata:", names(object@perSampleMetadata), "\n")
-          })
+         contains="RangedSummarizedExperiment", # finesse the RSE issue?
+         representation(perSampleMetadata="list")) # rename to linkedAssays 
 
 setValidity("MultiAssayExperiment", 
             function(object) {
@@ -31,14 +29,5 @@ setValidity("MultiAssayExperiment",
                                       "present in x@perSampleMetadata."))
               }
               if (is.null(msg)) TRUE else msg
-            })
-
-## FIXME: add subsetting methods that ensure validity 
-
-# setAs("RangedSummarizedExperiment", "MultiAssayExperiment", 
-#      function(from) callNextMethod()) ??
-
-## from AOCS example: this is ugly and should be finessed 
-# AOCS_multi <- as(AOCS, "MultiAssayExperiment")
-# AOCS_multi@perSampleMetadata <- List(AOCS@metadata)
-# AOCS_multi@metadata$miRNA <- NULL
+            }
+)
