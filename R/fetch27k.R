@@ -7,11 +7,10 @@
 #' @return a GenomicRatioSet.
 #'
 fetch27k <- function(GSE) {
-
   gset <- getGEO(GSE)[[1]]
   library(FDb.InfiniumMethylation.hg19)
   hm27 <- get27k()
-  GenomicRatioSet(gr=hm27[featureNames(gset)], 
-                  pData=pData(gset),
-                  Beta=exprs(gset)) 
+  prepForReanalysis(GenomicRatioSet(gr=hm27[featureNames(gset)], 
+                                    pData=pData(gset),
+                                    Beta=exprs(gset)))
 }

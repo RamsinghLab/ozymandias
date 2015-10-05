@@ -1,3 +1,47 @@
+#' for array-ifying a string with a possible leading path/URL/whatever
+#'
+#' @param x   a string
+#' @param y   a split character
+#' 
+#' @return    the array produced by splitting basename(x) on y
+#'
+#' @export
+#'
+explode <- function(x, y="_") {
+  strsplit(basename(x), y)[[1]]
+}
+
+#' for (e.g.) grabbing source barcodes from GEO 
+#' 
+#' @param x   a string
+#' @param y   a split character ("_")
+#' @param z   which element(s) to retrieve (1)
+#' 
+#' @return    the element(s) [z] produced by splitting basename(x) on y
+#'
+#' @export
+#'
+strunshift <- function(x, y="_", z=1) {
+  paste(explode(x, y)[z], collapse=y)
+}
+
+#' for (e.g.) grabbing source barcodes from GEO 
+#' 
+#' @param x   a string
+#' @param y   a split character
+#' @param z   which element(s) to retrieve (the last one)
+#' 
+#' @return    the element(S) produced by splitting basename(x) on y
+#'
+#' @export
+#'
+strpop <- function(x, y="_", z=NULL) {
+  exploded <- explode(x, y)
+  if (is.null(z)) z <- length(exploded)
+  paste(exploded[z], collapse=y)
+}
+
+
 #' for tidying up rowRanges prior to merging
 #'
 #' @param x  a GRanges or GRangesList that has metadata columns it doesn't need 

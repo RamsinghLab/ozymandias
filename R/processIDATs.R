@@ -2,6 +2,7 @@
 ##
 processIDATs <- function(targets, name, base=".", ...) {
   rgSetFile <- paste0(name, "_rgSet.rds")
+  stopifnot(c("Sample_Name", "Basename" ) %in% names(targets))
   ## failures can be mysterious if we do not set verbose!
   rgSet <- read.450k.exp(base=base, targets, verbose=TRUE)
   sampleNames(rgSet) <- targets$Sample_Name ## mandatory!
