@@ -13,6 +13,8 @@ reanalyzeFromIDATs <- function(grSet, name) {
     targets <- as(colData(grSet), "data.frame")
     rgSet <- processIDATs(targets, name=name)
     newGrSet <- processMeth(rgSet, name=name)
+  } else { 
+    message("Failed to prepare grSet for reanalysis!")
   }
   return(newGrSet)
 }
