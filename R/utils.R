@@ -11,7 +11,8 @@ str2vec <- function(x, y="_") {
   strsplit(basename(x), y)[[1]]
 }
 
-#' for (e.g.) grabbing source barcodes from GEO 
+#' grab the z'th element(s) off of a vector formed by splitting x on y 
+#' useful for (e.g.) grabbing source barcodes from GEO 
 #' 
 #' @param x   a string
 #' @param y   a split character ("_")
@@ -21,7 +22,7 @@ str2vec <- function(x, y="_") {
 #'
 #' @export
 #'
-strunshift <- function(x, y="_", z=1) {
+strshift <- function(x, y="_", z=1) {
   paste(str2vec(x, y)[z], collapse=y)
 }
 
