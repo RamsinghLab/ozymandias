@@ -1,3 +1,64 @@
+#' array-ify a string with a possible leading path/URL/whatever
+#'
+#' @param x   a string
+#' @param y   a split character
+#' 
+#' @return    the array produced by splitting basename(x) on y
+#'
+#' @export
+#'
+str2vec <- function(x, y="_") {
+  strsplit(basename(x), y)[[1]]
+}
+
+#' grab the z'th element(s) off of a vector formed by splitting x on y 
+#' useful for (e.g.) grabbing source barcodes from GEO 
+#' 
+#' @param x   a string
+#' @param y   a split character ("_")
+#' @param z   which element(s) to retrieve (1)
+#' 
+#' @return    the element(s) [z] produced by splitting basename(x) on y
+#'
+#' @export
+#'
+strshift <- function(x, y="_", z=1) {
+  paste(str2vec(x, y)[z], collapse=y)
+}
+
+#' pop a string off a string, for (e.g.) grabbing source barcodes from GEO 
+#' 
+#' @param x   a string
+#' @param y   a split character
+#' @param z   which element(s) to retrieve (the last one)
+#' 
+#' @return    the element(S) produced by splitting basename(x) on y
+#'
+#' @export
+#'
+strpop <- function(x, y="_", z=NULL) {
+  vec <- str2vec(x, y)
+  if (is.null(z)) z <- length(vec)
+  paste(vec[z], collapse=y)
+}
+
+#' The opposite of strpop: push string(s) onto a string.
+#' 
+#' @param w   a string
+#' @param x   one or more elements to push onto the string
+#' @param y   optional, split character (default: "_") 
+#' @param z   optional, add x after str2vec(w)[z] (default: length(str2vec(w)))
+#' 
+#' @return    a string
+#'
+#' @export
+#'
+strpush <- function(w, x, y="_", z=NULL) {
+  vec <- str2vec(w, y)
+  if (is.null(z)) z <- length(vec)
+  paste(append(vec, x, z), collapse=y)
+}
+
 #' for tidying up rowRanges prior to merging
 #'
 #' @param x  a GRanges or GRangesList that has metadata columns it doesn't need 

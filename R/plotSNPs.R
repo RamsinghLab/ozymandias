@@ -36,7 +36,7 @@ plotSNPs <- function(x, individuals=NULL, rotate=FALSE, ...) {
   }
 
 
-  ## fit w/mclust
+  # fit w/mclust
   SNPfit <- Mclust(as.numeric(tmp), G=3)
   calls <- matrix(SNPfit$class - 1, ncol=ncol(tmp))
   rownames(calls) <- rownames(tmp) 
@@ -47,8 +47,8 @@ plotSNPs <- function(x, individuals=NULL, rotate=FALSE, ...) {
 
   par(mfrow=c(1,1)) 
   if(rotate) calls <- t(calls)
-  if (!is.null(individuals) || (ncol(x) < 50)) { 
-    if (is.null(individuals)) individuals <- ncol(x) - 1 
+  if (!is.null(individuals) || (ncol(x) < 99)) { 
+    if (is.null(individuals)) individuals <- ncol(x) / 2
     message("Tracking plot for clusters...")
     rcc <- ConsensusClusterPlus(calls, maxK=individuals, reps=10, tmyPal=SNP,
                                 distance="manhattan", clusterAlg="pam", 
